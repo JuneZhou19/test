@@ -1,0 +1,10 @@
+[
+    {
+        "DHCP_SERVER":"192.168.128.4",
+        "DHCP_USERNAME":"root",
+        "DHCP_PASSWORD":"cisolution",
+        "disk_image": "ubuntu16.04_2.qcow2",
+        "host_username": "infrasim",
+        "host_password": "infrasim"
+    }
+]
