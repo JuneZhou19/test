@@ -32,8 +32,7 @@ class T130053_idic_SASDriveErase(CBaseCase):
 
     def update_node_config(self, node):
         # Update node config
-        #dst_path = node.send_file(os.environ["HOME"]+"/images/ubuntu16.04_2.qcow2", "/tmp/ubuntu16.04_2.qcow2")
-        dst_path = "/tmp/ubuntu16.04_2.qcow2"
+        dst_path = node.send_file(os.environ["HOME"]+"/images/ubuntu16.04_2.qcow2", "/tmp/ubuntu16.04_2.qcow2")
         str_node_name = node.get_instance_name()
 
         payload = [
@@ -43,7 +42,7 @@ class T130053_idic_SASDriveErase(CBaseCase):
                 "drives": [{"bootindex":1, "size": 8, "file": dst_path}]
             },
             {
-                "type": "ahci", #to change to lsisas3008 after qemu lsi code merge in
+                "type": "ahci",
                 "max_drive_per_controller":6,
                 "drives": [{"size": 8,
                             "format": "raw",
@@ -51,7 +50,7 @@ class T130053_idic_SASDriveErase(CBaseCase):
                             "file": "/tmp/sdb.img"}]
             },
             {
-                "type": "megasas-gen2", #to change to lsisas3008 after qemu lsi code merge in
+                "type": "megasas-gen2",
                 "max_drive_per_controller":6,
                 "drives": [{"size": 8,
                             "format": "raw",
