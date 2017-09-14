@@ -36,9 +36,11 @@ class T130052_idic_ESXiTest(CBaseCase):
         print node.ssh.send_command_wait_string(str_command="echo infrasim | sudo -S rm -f /tmp/esxi6p3-1.qcow2"+chr(13), wait="~$")
 
         dst_path = node.send_file(os.environ["HOME"]+"/images/esxi6p3-1.qcow2", "/tmp/esxi6p3-1.qcow2")
-        #dst_path = "/tmp/esxi6p3-1.qcow2"
 
-        str_node_name = node.get_instance_name()
+        try:
+            str_node_name = node.get_instance_name()
+        except:
+            self.result(BLOCK, "Failed to get infrasim instance.")
 
         payload = [
             {
@@ -88,7 +90,10 @@ class T130052_idic_ESXiTest(CBaseCase):
             return
 
     def esxcli_test(self, node):
-        str_node_name = node.get_instance_name()
+        try:
+            str_node_name = node.get_instance_name()
+        except:
+            self.result(BLOCK, "Failed to get infrasim instance.")
         qemu_config = node.get_instance_config(str_node_name)
         qemu_first_mac = qemu_config["compute"]["networks"][0]["mac"].lower()
         # Get qemu IP

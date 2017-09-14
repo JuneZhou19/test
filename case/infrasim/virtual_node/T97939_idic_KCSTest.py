@@ -45,7 +45,11 @@ class T97939_idic_KCSTest(CBaseCase):
 
     def boot_to_disk(self, node):
         dst_path = node.send_file("image/kcs.img", "kcs.img")
-        str_node_name = node.get_instance_name()
+        try:
+            str_node_name = node.get_instance_name()
+        except:
+            self.result(BLOCK, "Failed to get infrasim instance.")
+
         payload = [
             {
                 "type": "ahci",
@@ -71,7 +75,10 @@ class T97939_idic_KCSTest(CBaseCase):
             return
 
     def kcs_test(self, node):
-        str_node_name = node.get_instance_name()
+        try:
+            str_node_name = node.get_instance_name()
+        except:
+            self.result(BLOCK, "Failed to get infrasim instance.")
         qemu_config = node.get_instance_config(str_node_name)
         qemu_first_mac = qemu_config["compute"]["networks"][0]["mac"].lower()
         # Get qemu IP
