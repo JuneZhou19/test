@@ -41,6 +41,7 @@ class T130052_idic_ESXiTest(CBaseCase):
             str_node_name = node.get_instance_name()
         except:
             self.result(BLOCK, "Failed to get infrasim instance.")
+            return
 
         payload = [
             {
@@ -80,7 +81,7 @@ class T130052_idic_ESXiTest(CBaseCase):
         if ret != 0:
             self.result(BLOCK, "Fail to set instance {} on {} boot from disk".
                         format(str_node_name, node.get_ip()))
-
+            return
         # Reboot to esxi img
         self.log('INFO', 'Power cycle guest to boot to disk on {}...'.format(node.get_name()))
         ret, rsp = node.get_bmc().ipmi.ipmitool_standard_cmd("chassis power cycle")
@@ -94,6 +95,7 @@ class T130052_idic_ESXiTest(CBaseCase):
             str_node_name = node.get_instance_name()
         except:
             self.result(BLOCK, "Failed to get infrasim instance.")
+            return
         qemu_config = node.get_instance_config(str_node_name)
         qemu_first_mac = qemu_config["compute"]["networks"][0]["mac"].lower()
         # Get qemu IP
@@ -139,6 +141,7 @@ class T130052_idic_ESXiTest(CBaseCase):
 
         if match_index == 0:
             self.result(BLOCK, "Tried ssh to guest on {} for {} times already, but still failed.".format(node.get_name(), times))
+            return
         else:
             self.esx_test_ipmi_fru(node)
             self.esx_test_storage_device(node)
